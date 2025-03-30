@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlflow-server
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mlflow-server
+  template:
+    metadata:
+      labels:
+        app: mlflow-server
+    spec:
+      containers:
+        - name: mlflow-server
+          image: gastonamengual/mlflow-server:latest
+          ports:
+            - containerPort: 5005
+          envFrom:
+            - secretRef:
+                name: mlflow-server-secrets
